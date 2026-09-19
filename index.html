@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Plan Do See Diary</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/app.js" defer></script>
+</head>
+
+<body>
+    <div class="notice">지금은 로그인이 없어 링크를 아는 사람은 누구나 볼 수 있습니다. 남이 봐도 괜찮은 내용만 넣으세요</div>
+    <header class="planner-header">
+        <div class="header-title">
+            <h1>Plan Do See Diary</h1>
+        </div>
+        <div class="header-toolbar">
+            <nav><button data-page="plan" class="active">Plan</button><button data-page="tasks">Tasks</button><button
+                    data-page="do">Actual</button><button data-page="see">Review</button></nav>
+            <div id="currentPageTitle" class="current-page-title">계획 세우기</div>
+            <div class="header-tools">
+                <div class="search-wrap fixed-search">
+                    <svg class="search-field-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="11" cy="11" r="6.5" />
+                        <path d="m16 16 4 4" />
+                    </svg>
+                    <input id="search" class="header-search" placeholder="할 일 검색" aria-label="할 일 검색">
+                </div>
+                <div class="filter-wrap">
+                    <button id="filterToggle" class="icon-button menu-icon-button" type="button" aria-label="필터 및 정렬"
+                        title="필터 및 정렬">☰</button>
+                    <div id="filterMenu" class="filter-menu" hidden>
+                        <label>상태
+                            <select id="statusFilter">
+                                <option value="ALL">전체 상태</option>
+                                <option value="TODO">진행 중</option>
+                                <option value="DONE">완료</option>
+                                <option value="OVERDUE">지연</option>
+                            </select>
+                        </label>
+                        <label>정렬
+                            <select id="sort">
+                                <option value="due">마감일 빠른 순</option>
+                                <option value="priority">우선순위 높은 순</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <button id="exportButton" class="export-button" type="button" aria-label="전체 데이터 내보내기"
+                    title="전체 데이터 내보내기">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 15V3m0 0-4 4m4-4 4 4M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section id="planPage" class="page active">
+            <h2>계획 세우기</h2>
+            <form id="planForm" class="card"><input id="planTitle" placeholder="계획 이름" required>
+                <div class="grid plan-meta-grid">
+                    <div class="custom-date">
+                        <input id="planStartDisplay" type="text" placeholder="YYYY.MM.DD" readonly>
+
+                        <button type="button" class="calendar-btn" data-calendar="planStart"
+                            aria-label="시작일 선택">📅</button>
+
+                        <input id="planStart" class="native-date" type="date" required>
+                    </div>
+
+                    <div class="custom-date">
+                        <input id="planEndDisplay" type="text" placeholder="YYYY.MM.DD" readonly>
+
+                        <button type="button" class="calendar-btn" data-calendar="planEnd"
+                            aria-label="종료일 선택">📅</button>
+
+                        <input id="planEnd" class="native-date" type="date" required>
+                    </div> <select id="planPriority">
+                        <option>HIGH</option>
+                        <option selected>MEDIUM</option>
+                        <option>LOW</option>
+                    </select>
+                    <input id="planMinutes" type="number" min="0" placeholder="예상 시간(분)" required>
+                </div>
+                <textarea id="planCriteria" placeholder="성공 기준" required></textarea><button class="check-submit"
+                    type="submit" aria-label="계획 저장" title="계획 저장">✓</button>
+            </form>
+            <div id="planList"></div>
+            <h3>계획 수정 이력</h3>
+            <div id="historyList"></div>
+        </section>
+        <section id="tasksPage" class="page">
+            <h2>할 일</h2>
+            <form id="taskForm" class="card task-form">
+                <select id="taskPlan" required aria-label="Plan 선택"></select>
+                <div class="task-meta-grid">
+                    <div class="custom-date">
+                        <input id="taskDueDisplay" type="text" placeholder="YYYY.MM.DD" readonly>
+
+                        <button type="button" class="calendar-btn" data-calendar="taskDue"
+                            aria-label="마감일 선택">📅</button>
+
+                        <input id="taskDue" class="native-date" type="date" required>
+                    </div>
+                    <select id="taskPriority" aria-label="우선순위">
+                        <option>HIGH</option>
+                        <option selected>MEDIUM</option>
+                        <option>LOW</option>
+                    </select>
+                    <input id="taskTag" placeholder="태그">
+                    <input id="taskMinutes" type="number" min="0" placeholder="예상 시간(분)" required>
+                </div>
+                <div class="task-content-row">
+                    <input id="taskContent" type="text" placeholder="할 일" required>
+                    <button class="task-add-button" type="submit" aria-label="할 일 추가" title="할 일 추가">+</button>
+                </div>
+            </form>
+            <p>정렬값이 같으면 생성 ID가 빠른 순으로 표시합니다.</p>
+            <div id="taskList"></div>
+        </section>
+        <section id="doPage" class="page">
+            <h2>실제로 한 일</h2>
+            <form id="executionForm" class="card"><select id="executionTask" required></select>
+                <div class="grid">
+                    <div class="custom-datetime">
+                        <input id="executionStartDisplay" type="text" placeholder="YYYY.MM.DD HH:MM" readonly>
+
+                        <button type="button" class="calendar-btn" data-datetime="executionStart"
+                            aria-label="시작 날짜 및 시간 선택">📅</button>
+
+                        <input id="executionStart" class="native-date" type="datetime-local" required>
+                    </div>
+
+                    <div class="custom-datetime">
+                        <input id="executionEndDisplay" type="text" placeholder="YYYY.MM.DD HH:MM" readonly>
+
+                        <button type="button" class="calendar-btn" data-datetime="executionEnd"
+                            aria-label="종료 날짜 및 시간 선택">📅</button>
+
+                        <input id="executionEnd" class="native-date" type="datetime-local" required>
+                    </div>
+                </div>
+                <textarea id="blockedReason" placeholder="막혔던 이유"></textarea><button class="check-submit" type="submit"
+                    aria-label="실행 기록 저장" title="실행 기록 저장">✓</button>
+            </form>
+            <div id="executionList"></div>
+        </section>
+        <section id="seePage" class="page">
+            <h2>돌아보기</h2>
+            <div class="time-stats">
+                <div class="time-stat"><span>예상 시간</span><b id="estimated">0분</b></div>
+                <div class="time-stat"><span>실제 시간</span><b id="actual">0분</b></div>
+                <div class="time-stat"><span>차이</span><b id="diff">0분</b></div>
+            </div>
+            <div class="stats"><button data-evidence="all">계획 <b id="total">0</b></button><button
+                    data-evidence="done">완료 <b id="done">0</b></button><button data-evidence="overdue">지연 <b
+                        id="overdue">0</b></button><button data-evidence="blocked">막힘 <b id="blocked">0</b></button>
+            </div>
+            <div id="evidence" class="inline-evidence" hidden></div>
+            <form id="improvementForm" class="card reflection-card">
+                <div class="reflection-heading"><b>한 줄 회고</b><small>이번 기록을 돌아보고, 다음 계획에서 바꿀 점을 적어보세요.</small></div>
+                <textarea id="improvement" placeholder="예) 오늘은 계획한 일을 대부분 완료했다. 다음에는 더 일찍 시작해야겠다."
+                    required></textarea><button class="check-submit" type="submit" aria-label="다음 계획으로 넘기기"
+                    title="다음 계획으로 넘기기">✓</button>
+            </form>
+            <div id="improvementList"></div>
+        </section>
+    </main>
+    <footer>데이터는 서버 데이터베이스에 저장됩니다.</footer>
+</body>
+
+</html>

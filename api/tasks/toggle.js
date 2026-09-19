@@ -1,0 +1,1 @@
+const db=require('../_db');module.exports=async(req,res)=>{try{await db.query("UPDATE tasks SET completed=NOT completed, completed_at=IF(completed=0,NOW(),NULL) WHERE id=? AND deleted=0",[req.body.id]);res.json({ok:true})}catch(e){res.status(500).send(e.message)}};

@@ -1,0 +1,1 @@
+const db=require('./_db');module.exports=async(req,res)=>{try{await db.query('INSERT INTO improvements(content) VALUES(?)',[req.body.content]);res.json({ok:true})}catch(e){res.status(500).send(e.message)}};
