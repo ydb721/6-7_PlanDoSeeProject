@@ -68,7 +68,7 @@ registerForm.onsubmit = async e => {
     authMessage.classList.remove('success');
 
     try {
-        const result = await api('/auth/register', {
+        const result = await api('/auth?action=register', {
             method: 'POST',
             body: JSON.stringify({
                 username: $('#registerUsername').value.trim(),
@@ -109,7 +109,7 @@ loginForm.onsubmit = async e => {
     authMessage.textContent = '';
 
     try {
-        const result = await api('/auth/login', {
+        const result = await api('/auth?action=login', {
             method: 'POST',
             body: JSON.stringify({
                 username: $('#loginUsername').value.trim(),
@@ -841,7 +841,7 @@ passwordModalForm.onsubmit = async e => {
         try {
             const result =
                 await api(
-                    '/auth/change-password',
+                    '/auth?action=change-password',
                     {
                         method: 'POST',
                         body: JSON.stringify({
@@ -915,7 +915,7 @@ passwordModalForm.onsubmit = async e => {
         try {
             const result =
                 await api(
-                    '/auth/delete-account',
+                    '/auth?action=delete-account',
                     {
                         method: 'POST',
                         body: JSON.stringify({
@@ -979,7 +979,7 @@ $('#exportButton').onclick = () =>
 
 $('#logoutButton').onclick = async () => {
     try {
-        await api('/auth/logout', {
+        await api('/auth?action=logout', {
             method: 'POST'
         });
 
@@ -1020,7 +1020,7 @@ $('#logoutButton').onclick = async () => {
 async function checkAuth() {
     try {
         const result =
-            await api('/auth/me');
+            await api('/auth?action=me');
 
         document.body.classList.remove(
             'auth-locked'
