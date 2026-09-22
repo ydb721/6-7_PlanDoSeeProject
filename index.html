@@ -9,8 +9,67 @@
     <script src="./js/app.js" defer></script>
 </head>
 
-<body>
-    <div class="notice">지금은 로그인이 없어 링크를 아는 사람은 누구나 볼 수 있습니다. 남이 봐도 괜찮은 내용만 넣으세요</div>
+<!-- T07 비밀번호 입력 모달 -->
+<div id="passwordModal" class="password-modal" hidden>
+    <div class="password-modal-card">
+        <h2 id="passwordModalTitle">비밀번호 확인</h2>
+
+        <p id="passwordModalDescription"></p>
+
+        <form id="passwordModalForm">
+            <input id="passwordModalCurrent" type="password" placeholder="현재 비밀번호" autocomplete="current-password">
+
+            <input id="passwordModalNew" type="password" placeholder="새 비밀번호 (8자 이상)" autocomplete="new-password"
+                hidden>
+
+            <input id="passwordModalConfirm" type="password" placeholder="새 비밀번호 확인" autocomplete="new-password" hidden>
+
+            <p id="passwordModalMessage"></p>
+
+            <div class="password-modal-actions">
+                <button type="button" id="passwordModalCancel">
+                    취소
+                </button>
+
+                <button type="submit" id="passwordModalSubmit">
+                    확인
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<body class="auth-locked">
+    <section id="authPage" class="auth-page">
+        <div class="auth-card">
+            <h1>Plan Do See Diary</h1>
+            <p class="auth-description">내 계획과 실행 기록을 안전하게 관리하세요.</p>
+
+            <div class="auth-tabs">
+                <button id="loginTab" type="button" class="active">로그인</button>
+                <button id="registerTab" type="button">가입</button>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <input id="loginUsername" type="text" placeholder="아이디" autocomplete="username" required>
+
+                <input id="loginPassword" type="password" placeholder="비밀번호" autocomplete="current-password" required>
+
+                <button type="submit">로그인</button>
+            </form>
+
+            <form id="registerForm" class="auth-form" hidden>
+                <input id="registerUsername" type="text" placeholder="아이디" autocomplete="username" required>
+
+                <input id="registerPassword" type="password" placeholder="비밀번호 (8자 이상)" autocomplete="new-password"
+                    minlength="8" required>
+
+                <button type="submit">가입하기</button>
+            </form>
+
+            <p id="authMessage" class="auth-message"></p>
+        </div>
+    </section>
     <header class="planner-header">
         <div class="header-title">
             <h1>Plan Do See Diary</h1>
@@ -52,6 +111,17 @@
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M12 15V3m0 0-4 4m4-4 4 4M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" />
                     </svg>
+                </button>
+                <span id="currentUsername" class="current-username"></span>
+
+                <button id="changePasswordButton" class="logout-button" type="button">
+                    비밀번호 변경
+                </button>
+                <button id="deleteAccountButton" class="logout-button" type="button">
+                    계정 삭제
+                </button>
+                <button id="logoutButton" class="logout-button" type="button">
+                    로그아웃
                 </button>
             </div>
         </div>

@@ -1,6 +1,6 @@
 /* ========================================
-   Plan Do See Diary
-   Pastel Blue Planner Theme
+    Plan Do See Diary
+    Pastel Blue Planner Theme
 ======================================== */
 
 :root {
@@ -1922,12 +1922,7 @@ main,
     width: 100% !important;
     max-width: none !important;
 
-    height: calc(
-        var(--review-height)
-        - 58px
-        - 58px
-        - (var(--review-gap) * 2)
-    ) !important;
+    height: calc(var(--review-height) - 58px - 58px - (var(--review-gap) * 2)) !important;
 
     min-height: 0 !important;
 
@@ -1966,10 +1961,10 @@ main,
 }
 
 /* 목록 안에 생성되는 실제 카드 */
-#planPage #planList > .item,
-#tasksPage #taskList > .item,
-#doPage #executionList > .item,
-#seePage #improvementList > .item {
+#planPage #planList>.item,
+#tasksPage #taskList>.item,
+#doPage #executionList>.item,
+#seePage #improvementList>.item {
     width: 100% !important;
     max-width: none !important;
     margin-left: 0 !important;
@@ -2014,8 +2009,8 @@ main,
 }
 
 /* 클릭해서 나타나는 실제 근거 기록 */
-#seePage #evidence > div,
-#seePage #evidence > p {
+#seePage #evidence>div,
+#seePage #evidence>p {
     width: 100% !important;
     box-sizing: border-box !important;
 
@@ -2035,7 +2030,7 @@ main,
     box-sizing: border-box;
 }
 
-#planPage #historyList > .item {
+#planPage #historyList>.item {
     width: 100% !important;
     max-width: none !important;
     margin-left: 0 !important;
@@ -2060,10 +2055,288 @@ main,
 }
 
 /* 근거 기록 각각 */
-#seePage #evidence > div,
-#seePage #evidence > p {
+#seePage #evidence>div,
+#seePage #evidence>p {
     width: 100% !important;
     box-sizing: border-box !important;
 
     margin: 0 !important;
+}
+
+/* T07 Authentication */
+body.auth-locked>.notice,
+body.auth-locked>.planner-header,
+body.auth-locked>main,
+body.auth-locked>footer {
+    display: none !important;
+}
+
+body:not(.auth-locked)>#authPage {
+    display: none;
+}
+
+/* =========================
+   T07 LOGIN UI
+   ========================= */
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+    background: #f5faff;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 42px 36px 36px;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid #cfe4f7;
+    border-radius: 22px;
+    box-shadow: 0 12px 35px rgba(73, 130, 180, 0.10);
+}
+
+.auth-card h1 {
+    margin: 0;
+    text-align: center;
+    font-size: 30px;
+    color: #174c78;
+}
+
+.auth-description {
+    margin: 10px 0 28px;
+    text-align: center;
+    font-size: 14px;
+    color: #7a91a5;
+}
+
+.auth-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 22px;
+    padding: 4px;
+    background: #f1f7fc;
+    border-radius: 12px;
+}
+
+.auth-tabs button {
+    width: 100%;
+    padding: 10px;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: #7990a5;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.auth-tabs button.active {
+    background: #ffffff;
+    color: #438bc4;
+    box-shadow: 0 2px 8px rgba(60, 120, 170, 0.10);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.auth-form[hidden] {
+    display: none !important;
+}
+
+.auth-form input {
+    width: 100%;
+    height: 48px;
+    box-sizing: border-box;
+    padding: 0 15px;
+    border: 1px solid #cfe0ee;
+    border-radius: 11px;
+    background: #ffffff;
+    color: #29465e;
+    font-size: 14px;
+    outline: none;
+}
+
+.auth-form input:focus {
+    border-color: #74afe0;
+    box-shadow: 0 0 0 3px rgba(116, 175, 224, 0.12);
+}
+
+.auth-form input::placeholder {
+    color: #a4b4c2;
+}
+
+.auth-form button[type="submit"] {
+    width: 100%;
+    height: 48px;
+    margin-top: 4px;
+    border: 0;
+    border-radius: 11px;
+    background: #579bd2;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.auth-form button[type="submit"]:hover {
+    background: #478cc4;
+}
+
+.auth-message {
+    min-height: 20px;
+    margin: 14px 0 0;
+    text-align: center;
+    font-size: 13px;
+    color: #63819a;
+}
+
+/* 로그인 전에는 기존 다이어리 숨김 */
+body.auth-locked>.notice,
+body.auth-locked>.planner-header,
+body.auth-locked>main,
+body.auth-locked>footer {
+    display: none !important;
+}
+
+body:not(.auth-locked)>#authPage {
+    display: none;
+}
+
+@media (max-width: 520px) {
+    .auth-page {
+        padding: 16px;
+    }
+
+    .auth-card {
+        padding: 34px 22px 28px;
+    }
+
+    .auth-card h1 {
+        font-size: 26px;
+    }
+}
+
+.auth-message.success {
+    color: #3f8f68;
+    font-weight: 700;
+}
+
+.logout-button {
+    height: 36px;
+    padding: 0 14px;
+    border: 1px solid #cfe0ee;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #63819a;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.logout-button:hover {
+    background: #f1f7fc;
+    color: #438bc4;
+}
+
+/* T07 비밀번호 입력 모달 */
+.password-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+    background: rgba(35, 58, 78, 0.35);
+}
+
+.password-modal[hidden] {
+    display: none;
+}
+
+.password-modal-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 32px;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #cfe4f7;
+    border-radius: 20px;
+    box-shadow: 0 16px 40px rgba(73, 130, 180, 0.18);
+}
+
+.password-modal-card h2 {
+    margin: 0 0 10px;
+    color: #174d7a;
+    font-size: 22px;
+}
+
+.password-modal-card > p {
+    margin: 0 0 20px;
+    color: #6f879a;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+#passwordModalForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#passwordModalForm input {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    box-sizing: border-box;
+    border: 1px solid #cfe0ee;
+    border-radius: 10px;
+    outline: none;
+    font: inherit;
+}
+
+#passwordModalForm input:focus {
+    border-color: #65a8d8;
+}
+
+#passwordModalMessage {
+    min-height: 20px;
+    margin: 0;
+    color: #c95b5b;
+    font-size: 13px;
+}
+
+.password-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.password-modal-actions button {
+    height: 40px;
+    padding: 0 18px;
+    border: 1px solid #cfe0ee;
+    border-radius: 9px;
+    background: #fff;
+    color: #63819a;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#passwordModalSubmit {
+    border-color: #5da2d5;
+    background: #5da2d5;
+    color: #fff;
 }
