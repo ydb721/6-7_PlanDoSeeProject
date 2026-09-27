@@ -2340,3 +2340,9 @@ body:not(.auth-locked)>#authPage {
     background: #5da2d5;
     color: #fff;
 }
+
+/* Review 근거 목록이 여러 개여도 잘리지 않도록 표시 */
+#seePage #evidence {
+    max-height: none !important;
+    overflow-y: visible !important;
+}
