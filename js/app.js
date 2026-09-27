@@ -355,7 +355,7 @@ function renderTasks() {
                 }[b.priority]
             ) || a.id - b.id
             : a.due_date.localeCompare(b.due_date) ||
-              a.id - b.id
+            a.id - b.id
     );
 
     $('#taskList').innerHTML =
@@ -603,6 +603,17 @@ function review() {
 
     $('#diff').textContent =
         (act - est) + '분';
+
+    const count = tasks.length;
+
+    $('#estimatedAvg').textContent =
+        (count ? est / count : 0).toFixed(2) + '분';
+
+    $('#actualAvg').textContent =
+        (count ? act / count : 0).toFixed(2) + '분';
+
+    $('#diffAvg').textContent =
+        (count ? (act - est) / count : 0).toFixed(2) + '분';
 }
 
 
@@ -1095,7 +1106,7 @@ $$('nav button').forEach(button => {
             if (title) {
                 title.textContent =
                     pageTitleMap[
-                        button.dataset.page
+                    button.dataset.page
                     ] || '';
             }
         }
